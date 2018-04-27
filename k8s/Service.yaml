@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: echo-spring-service
+  name: my-echo-spring-service
 spec:
   ports:
     - port: 8080
+      protocol: TCP
       targetPort: 8080
-      name: http
   selector:
-    run: echo-spring-v1
-  type: NodePort
+    app: my-echo-spring
+  type: LoadBalancer

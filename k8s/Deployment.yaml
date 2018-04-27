@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-echo-spring
+  namespace: default
+  labels:
+    app: my-echo-spring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-echo-spring
+  template:
+    metadata:
+      labels:
+        app: my-echo-spring
+    spec:
+      containers:
+      - name: my-echo-spring
+        image: echo-spring:v2
+        ports:
+        - containerPort: 8080
