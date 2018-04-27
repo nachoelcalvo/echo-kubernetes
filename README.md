@@ -12,7 +12,7 @@ docker tag echo-spring:v3 eu.gcr.io/my-kubernetes-project-202310/echo-spring:v3
 ## Push image to gcr
 docker push -- eu.gcr.io/my-kubernetes-project-202310/echo-spring:v3
 
-## Create Deploymente on kubernetes
+## Create Deployment on kubernetes
 kubectl create -f Deployment.yaml
 
 ## Delete cluster
