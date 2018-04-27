@@ -6,7 +6,7 @@ gcloud container --project "my-kubernetes-project-202310" clusters create "echo-
 ## Build docker image
 docker build -t echo-spring:v3 .
 
-## tag image using container registry and project 
+## Tag image using container registry and project 
 docker tag echo-spring:v3 eu.gcr.io/my-kubernetes-project-202310/echo-spring:v3
 
 ## Push image to gcr
