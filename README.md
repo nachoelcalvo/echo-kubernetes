@@ -1,4 +1,4 @@
-# Commands to run echo service in the cloud
+# Commands to run echo service in a GCP Kubernetes cluster
 
 ## Create cluster
 gcloud container --project "my-kubernetes-project-202310" clusters create "echo-kluster" --zone "europe-west2" --machine-type "n1-standard-1" --image-type "GCI" --disk-size "100" --scopes "https://www.googleapis.com/auth/compute","https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" --num-nodes "2" --network "default" --enable-cloud-logging --enable-cloud-monitoring
