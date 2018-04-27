@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/greetings")
 public class EchoController {
 
+	public static final String CONTAINER_OWNER = "CONTAINER_OWNER";
 	@Autowired
 	private Environment env;
 
@@ -26,6 +27,6 @@ public class EchoController {
 	})
 	@GetMapping(path = "/{message}", produces = "text/plain")
 	public String echo(@PathVariable String message) {
-		return "Hey " +  message.toUpperCase();
+		return "Hey " +  env.getProperty(CONTAINER_OWNER);
 	}
 }
