@@ -17,3 +17,47 @@ kubectl create -f Deployment.yaml
 
 ## Delete cluster
 gcloud container clusters delete "echo-kluster"
+
+# Commands to run echo service in Open Shift Platform
+
+## Create buildconfig based on Dockerfile
+oc new-build --binary=true --name=echo-build
+
+## Start build
+oc start-build echo-build -n echo-cloud --from-file=echo.jar
+
+Optionally, a docker image could be pushed to openshift internal registry as follows
+
+#### Push Image from local
+docker login openshift repository
+
+#### login on openshift docker registry
+docker login -u developer -p $(oc whoami -t) $(minishift openshift registry)
+
+#### Push Image to repository and create Image Streams on the project
+docker push 172.30.1.1:5000/echo-cloud/echo
+
+## Create deploymentconfig from image
+oc create deploymentconfig echo --image=172.30.1.1:5000/echo-cloud/echo-build
+ 
+### Optionally, you can create an app from image as follows
+oc new-app echo --name=echo
+
+## Expose dc
+oc expose dc/echo --port=8080 --type=LoadBalancer
+
+## Expose svc
+oc expose svc/echo
+
+## Change permissions on project B to pull image from project A
+oc policy add-role-to-user system:image-puller system:serviceaccount:poc-qa:admin --namespace=echo-cloud
+
+## Image tagging / Promotion
+oc tag echo-cloud/echo:latest echo-cloud/echo:promotetoQA
+  or
+oc tag echo-cloud/echo:latest poc-qa/echo:promotetoQA
+
+## From echo-QA
+oc create deploymentconfig echo --image=172.30.1.1:5000/echo-cloud/echo:promotetoQA
+  or
+oc create deploymentconfig echo --image=172.30.1.1:5000/poc-qa/echo:promotetoQA
