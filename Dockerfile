@@ -9,8 +9,9 @@ ENV ECHO_GROUP=$ECHO_USER
 VOLUME /tmp
 
 WORKDIR /opt/echo
-COPY target/echo-0.0.1.jar echo.jar
+#COPY target/echo-0.0.1.jar echo.jar
 
+ADD *.jar echo.jar
 ENTRYPOINT ["java", "-jar", "echo.jar"]
 
 #User created on alpine to run as non root
@@ -18,3 +19,4 @@ RUN addgroup -S $ECHO_USER && adduser -S -G $ECHO_GROUP $ECHO_USER
 USER $ECHO_USER
 
 EXPOSE 8080
+
