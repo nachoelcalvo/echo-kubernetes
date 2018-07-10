@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewBuild
+  creationTimestamp: null
+  labels:
+    build: echo-build
+  name: echo-build
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: echo-build:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    dockerfile: |-
+      FROM openjdk:8-jre-alpine
+      VOLUME /tmp
+      WORKDIR /opt/echo
+      ADD *.jar echo.jar
+      ENTRYPOINT ["java", "-jar", "echo.jar"]
+      EXPOSE 8080
+    type: Dockerfile
+  strategy:
+    dockerStrategy: {}
+    type: Docker
+  triggers:
+  - github:
+      secret: uifLFpth-3Px-3FN66xr
+    type: GitHub
+  - generic:
+      secret: TbA9YE0MIcOuWh1Rp8Tm
+    type: Generic
+status:
+  lastVersion: 0
