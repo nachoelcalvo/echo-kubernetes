@@ -31,14 +31,14 @@ spec:
               value: '10'
             - name: SPRING_CONFIG_LOCATION
               value: /deployments/config/application.properties
-          image: 'docker-registry.default.svc:5000/echo-cloud/echo'
+          image: 'docker-registry.default.svc :5000/echo-cloud/echo'
           imagePullPolicy: Always
           name: default-container
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
           volumeMounts:
-            - mountPath: /deployments/config
+            - mountPath: /deployments/config #Springboot fetches default external configuration from /config
               name: application-config
               readOnly: true
       volumes:
@@ -47,7 +47,7 @@ spec:
             items:
               - key: application.properties
                 path: application.properties
-            name: echo-config
+            name: echo-config # Existing configMap name
           name: application-config
   test: false
   triggers:
