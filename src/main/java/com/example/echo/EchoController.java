@@ -19,14 +19,14 @@ public class EchoController {
 
 	public static final String CONTAINER_OWNER = "CONTAINER_OWNER";
 
-	@Autowired
-	private Environment env;
+	private EchoConfig config;
 
-	@Autowired
-	private EchoConfig echoConfig;
+	private JKSConfiguration jksConfiguration;
 
-	@Value("${container.owner}")
-	private String owner;
+	public EchoController(EchoConfig config, JKSConfiguration jksConfiguration) {
+		this.config = config;
+		this.jksConfiguration = jksConfiguration;
+	}
 
 	@ApiOperation(value = "Devuelve un saludo en mayusculas ", tags = "Echo")
 	@ApiResponses({
@@ -35,7 +35,6 @@ public class EchoController {
 	})
 	@GetMapping(path = "/{message}", produces = "text/plain")
 	public String echo(@PathVariable String message) {
-//		return "Hey " +  env.getProperty(CONTAINER_OWNER);
-		return "Hey " +  echoConfig.getOwner();
+		return "Hey " + config.getUsername() + " with password " + config.getPassword();
 	}
 }

@@ -1,0 +1,15 @@
+spring:
+  cloud:
+    vault:
+      uri: http://localhost:8200
+      connection-timeout: 5000
+      token: 00000000-0000-0000-0000-000000000000
+      kv:
+        enabled: true
+        application-name: echo
+      database:
+        enabled: true
+        role: my-role
+        backend: database
+        username-property: spring.data.mongodb.username
+        password-property: spring.data.mongodb.password

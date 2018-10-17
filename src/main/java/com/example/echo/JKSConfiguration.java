@@ -4,16 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 
 @Configuration
-@ConfigurationProperties(prefix = "container")
+@ConfigurationProperties(prefix = "jks")
 @NoArgsConstructor
 @Data
-public class EchoConfig {
+public class JKSConfiguration {
 
-    private String username;
-
-    private String password;
-
-    private String owner;
+    private Resource keystore;
 }
