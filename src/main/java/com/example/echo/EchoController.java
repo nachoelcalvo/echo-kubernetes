@@ -14,19 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(value = "Hello Echo API")
 @RestController
-@RequestMapping("/greetings")
 public class EchoController {
 
 	public static final String CONTAINER_OWNER = "CONTAINER_OWNER";
-
-	@Autowired
-	private Environment env;
-
-	@Autowired
-	private EchoConfig echoConfig;
-
-	@Value("${container.owner}")
-	private String owner;
 
 	@ApiOperation(value = "Devuelve un saludo en mayusculas ", tags = "Echo")
 	@ApiResponses({
@@ -35,7 +25,6 @@ public class EchoController {
 	})
 	@GetMapping(path = "/{message}", produces = "text/plain")
 	public String echo(@PathVariable String message) {
-//		return "Hey " +  env.getProperty(CONTAINER_OWNER);
-		return "Hey " +  echoConfig.getOwner();
+		return "Hey " +  message.toUpperCase();
 	}
 }
