@@ -1,4 +1,4 @@
-package com.example.echo;
+package com.poc.template;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

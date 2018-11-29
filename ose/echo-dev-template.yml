@@ -9,6 +9,8 @@ objects:
     labels:
       app: "${APP_NAME}"
     name: "${APP_NAME}"
+    annotations:
+      description: "Echo template for POC"
   spec:
     replicas: "${ECHO_REPLICAS}"
     selector:
@@ -37,6 +39,26 @@ objects:
           ports:
           - containerPort: 8080
             protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /echo/actuator/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /echo/actuator/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
@@ -77,10 +99,10 @@ objects:
     wildcardPolicy: None
 parameters:
 - name : ECHO_REPLICAS
-  displayName : Number of Echo Replicas
+  displayName : Replicas Number
   description: Number of Echo Replicas that will be created
   required : true
 - name: APP_NAME
   displayName: Name of the app
-  description: Name of the app
+  description: Name of the echo application that will be deployed
   required: true
