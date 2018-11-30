@@ -12,7 +12,7 @@ objects:
     annotations:
       description: "Echo template for POC"
   spec:
-    replicas: "${ECHO_REPLICAS}"
+    replicas: "${REPLICAS}"
     selector:
       app: "${APP_NAME}"
       deploymentconfig: "${APP_NAME}"
@@ -33,7 +33,7 @@ objects:
           deploymentconfig: "${APP_NAME}"
       spec:
         containers:
-        - image: 172.30.1.1:5000/poc-template/echo:dev
+        - image: "172.30.1.1:5000/poc-template/${IMAGE}:${TAG}"
           imagePullPolicy: Always
           name: "${APP_NAME}"
           ports:
@@ -98,11 +98,19 @@ objects:
       weight: 100
     wildcardPolicy: None
 parameters:
-- name : ECHO_REPLICAS
-  displayName : Replicas Number
-  description: Number of Echo Replicas that will be created
-  required : true
 - name: APP_NAME
   displayName: Name of the app
-  description: Name of the echo application that will be deployed
+  description: Name of the application that will be deployed
   required: true
+- name: IMAGE
+  displayName: Image
+  description: Image to be deployed
+  required: true
+- name: TAG
+  displayName: Tag
+  description: Image tag (dev by default)
+  value: "dev"
+- name : REPLICAS
+  displayName : Replicas Number
+  description: Number of Echo Replicas that will be created
+  value: "1"

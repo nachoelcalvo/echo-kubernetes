@@ -12,19 +12,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(value = "Hello Echo API")
+@Api(value = "Echo API")
 @RestController
 public class EchoController {
 
-	public static final String CONTAINER_OWNER = "CONTAINER_OWNER";
-
-	@ApiOperation(value = "Devuelve un saludo en mayusculas ", tags = "Echo")
+	@ApiOperation(value = "Return a message in upper case", tags = "Echo")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "OK"),
-			@ApiResponse(code = 500, message = "Error interno del servidor")
+			@ApiResponse(code = 500, message = "Internal Server Error")
 	})
 	@GetMapping(path = "/{message}", produces = "text/plain")
 	public String echo(@PathVariable String message) {
-		return "Hey " +  message.toUpperCase();
+		return message.toUpperCase();
 	}
 }
